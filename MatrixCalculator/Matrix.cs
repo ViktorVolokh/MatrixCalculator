@@ -64,7 +64,12 @@ public class Matrix
     //supporting methods
     public void SwapRows(int row1, int row2)
     {
-        
+        for (int i = 0; i < Cols; i++)
+        {
+            double temp = this[row1, i];
+            this[row1, i] = this[row2, i];
+            this[row2, i] = temp;
+        }
     }
 
     public void SwapCols(int col1, int col2, int row1, int row2)
