@@ -36,10 +36,15 @@ public class Matrix
 
     public (Matrix upperTriangularMatrix, int swapsForDeterminant) GetUpperTriangularMatrix()
     {
+        Matrix matrix = this.Clone();
+        int swapsForDeterminant = 1;
+
+        if (matrix[0, 0] == 0)
+        {
+            
+        }
         
-        
-        Matrix a = new Matrix(3, 3);
-        return (a, 0);
+        return (matrix, swapsForDeterminant);
     }
     
     public (Matrix lowerTriangularMatrix, int swapsForDeterminant) GetLowerTriangularMatrix()
@@ -57,7 +62,7 @@ public class Matrix
     }
     
     //supporting methods
-    public void SwapRows(int row1, int col1, int row2, int col2)
+    public void SwapRows(int row1, int row2)
     {
         
     }
@@ -65,5 +70,19 @@ public class Matrix
     public void SwapCols(int col1, int col2, int row1, int row2)
     {
 
+    }
+
+    public Matrix Clone()
+    {
+        Matrix matrix = new Matrix(Rows, Cols);
+        for (int i = 0; i < Rows; i++)
+        {
+            for (int j = 0; j < Cols; j++)
+            {
+                matrix[i, j] = this[i, j];
+            }
+        }
+        
+        return matrix;
     }
 }
