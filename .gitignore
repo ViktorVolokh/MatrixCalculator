@@ -1,0 +1,15 @@
+# .NET / C#
+bin/
+obj/
+[Dd]ebug/
+[Rr]elease/
+
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+# User & OS
+*.user
+*.suo
+.DS_Store
+Thumbs.db
