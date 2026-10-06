@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatrixCalculator", "MatrixCalculator\MatrixCalculator.csproj", "{89452F55-2F29-4388-A821-7A4C50F7FCA7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{89452F55-2F29-4388-A821-7A4C50F7FCA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89452F55-2F29-4388-A821-7A4C50F7FCA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89452F55-2F29-4388-A821-7A4C50F7FCA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89452F55-2F29-4388-A821-7A4C50F7FCA7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
