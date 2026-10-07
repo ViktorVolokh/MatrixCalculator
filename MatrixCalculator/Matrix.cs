@@ -13,6 +13,7 @@ public class Matrix
         _data = new double[Rows, Cols];
         _isCellSet = new bool[rows, cols];
     }
+
     public double this[int row, int col]
     {
         get => _data[row, col];
@@ -26,5 +27,43 @@ public class Matrix
             _data[row, col] = value;
             _isCellSet[row, col] = true;
         }
+    }
+
+    public double Determinant()
+    {
+        return 0;
+    }
+
+    public (Matrix upperTriangularMatrix, int swapsForDeterminant) GetUpperTriangularMatrix()
+    {
+        
+        
+        Matrix a = new Matrix(3, 3);
+        return (a, 0);
+    }
+    
+    public (Matrix lowerTriangularMatrix, int swapsForDeterminant) GetLowerTriangularMatrix()
+    {
+        
+        
+        Matrix a = new Matrix(3, 3);
+        return (a, 0);
+    }
+    
+    public Matrix GetDiagonalMatrix()
+    {
+        Matrix a = new Matrix(3, 3);
+        return a;
+    }
+    
+    //supporting methods
+    public void SwapRows(int row1, int col1, int row2, int col2)
+    {
+        
+    }
+
+    public void SwapCols(int col1, int col2, int row1, int row2)
+    {
+
     }
 }
