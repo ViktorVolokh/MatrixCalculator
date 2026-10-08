@@ -72,9 +72,14 @@ public class Matrix
         }
     }
 
-    public void SwapCols(int col1, int col2, int row1, int row2)
+    public void SwapCols(int col1, int col2)
     {
-
+        for (int i = 0; i < Cols; i++)
+        {
+            double temp = this[col1, i];
+            this[col1, i] = this[col2, i];
+            this[col2, i] = temp;
+        }
     }
 
     public Matrix Clone()
