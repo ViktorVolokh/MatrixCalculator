@@ -38,12 +38,24 @@ public class Matrix
     {
         Matrix matrix = this.Clone();
         int swapsForDeterminant = 1;
-
-        if (matrix[0, 0] == 0)
+        int check = 0;
+        bool isAllRowsZero = false;
+        while (true)
         {
-            
+            if (matrix[check, 0] != 0)
+            {
+                break;
+            }
+            else if (check == Cols - 1)
+            {
+                isAllRowsZero = true;
+            }
+            else
+            {
+                check++;
+            }
         }
-        
+
         return (matrix, swapsForDeterminant);
     }
     
@@ -94,5 +106,31 @@ public class Matrix
         }
         
         return matrix;
+    }
+    
+    // not esential methods for developer for checking
+
+    public void FillMatrix()
+    {
+        for (int i = 0; i < Rows; i++)
+        {
+            for (int j = 0; j < Cols; j++)
+            {
+                this[i, j] = i * Cols + j; // just a random filling
+            }
+        }
+    }
+
+    public void PrintMatrix()
+    {
+        for (int i = 0; i < Rows; i++)
+        {
+            for (int j = 0; j < Cols; j++)
+            {
+                Console.Write(this[i, j] + " ");
+            }
+
+            Console.WriteLine();
+        }
     }
 }
