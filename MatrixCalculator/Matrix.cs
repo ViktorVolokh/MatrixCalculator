@@ -37,25 +37,30 @@ public class Matrix
     public (Matrix upperTriangularMatrix, int swapsForDeterminant) GetUpperTriangularMatrix()
     {
         Matrix matrix = this.Clone();
-        int swapsForDeterminant = 1;
-        
-        int startRow1 = matrix.FindFirstNonZeroRow(0, 0);
-        if (startRow1 != 0)
+        int swapsForDeterminant = 0;
+        for (int i = 0; i < Cols; i++)
         {
-            matrix.SwapRows(startRow1, 0);
-            swapsForDeterminant = -1;
-        }
-        startRow1 = matrix.FindFirstNonZeroRow(startRow1, 0);
-        while (startRow1 != -1)
-        {
-            startRow1 = matrix.FindFirstNonZeroRow(startRow1, 0);
-            double multiplier = matrix[startRow1, 0] / matrix[0, 0];
-
-            for (int i = 0; i < Cols; i++)
+            int startRow1 = matrix.FindFirstNonZeroRow(i, i);
+            if (startRow1 != i)
             {
-                matrix[startRow1, i] -= multiplier * matrix[0, i];
+                matrix.SwapRows(startRow1, i);
+                swapsForDeterminant++;
+            }
+
+            startRow1 = matrix.FindFirstNonZeroRow(startRow1, i);
+            while (startRow1 != -1)
+            {
+                double multiplier = matrix[startRow1, i] / matrix[i, i];
+
+                for (int j = 0; j < Cols; j++)
+                {
+                    matrix[startRow1, j] -= multiplier * matrix[i, j];
+                }
+
+                startRow1 = matrix.FindFirstNonZeroRow(startRow1, i);
             }
         }
+
         return (matrix, swapsForDeterminant);
     }
     

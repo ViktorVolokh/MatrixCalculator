@@ -8,5 +8,7 @@ class Program
         Matrix matrix = new Matrix(3, 3);
         matrix.FillMatrix();
         matrix.PrintMatrix();
+        (Matrix test, int a) = matrix.GetUpperTriangularMatrix();
+        test.PrintMatrix();
     }
 }
