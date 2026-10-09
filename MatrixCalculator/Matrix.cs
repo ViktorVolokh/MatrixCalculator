@@ -39,8 +39,23 @@ public class Matrix
         Matrix matrix = this.Clone();
         int swapsForDeterminant = 1;
         
-        int startRow = matrix.FindFirstNonZeroRow(0, 0);
-        
+        int startRow1 = matrix.FindFirstNonZeroRow(0, 0);
+        if (startRow1 != 0)
+        {
+            matrix.SwapRows(startRow1, 0);
+            swapsForDeterminant = -1;
+        }
+        startRow1 = matrix.FindFirstNonZeroRow(startRow1, 0);
+        while (startRow1 != -1)
+        {
+            startRow1 = matrix.FindFirstNonZeroRow(startRow1, 0);
+            double multiplier = matrix[startRow1, 0] / matrix[0, 0];
+
+            for (int i = 0; i < Cols; i++)
+            {
+                matrix[startRow1, i] -= multiplier * matrix[0, i];
+            }
+        }
         return (matrix, swapsForDeterminant);
     }
     
