@@ -38,24 +38,9 @@ public class Matrix
     {
         Matrix matrix = this.Clone();
         int swapsForDeterminant = 1;
-        int check = 0;
-        bool isAllRowsZero = false;
-        while (true)
-        {
-            if (matrix[check, 0] != 0)
-            {
-                break;
-            }
-            else if (check == Cols - 1)
-            {
-                isAllRowsZero = true;
-            }
-            else
-            {
-                check++;
-            }
-        }
-
+        
+        int startRow = matrix.FindFirstNonZeroRow(0, 0);
+        
         return (matrix, swapsForDeterminant);
     }
     
@@ -74,7 +59,7 @@ public class Matrix
     }
     
     //supporting methods
-    public void SwapRows(int row1, int row2)
+    private void SwapRows(int row1, int row2)
     {
         for (int i = 0; i < Cols; i++)
         {
@@ -84,7 +69,7 @@ public class Matrix
         }
     }
 
-    public void SwapCols(int col1, int col2)
+    private void SwapCols(int col1, int col2)
     {
         for (int i = 0; i < Cols; i++)
         {
@@ -106,6 +91,18 @@ public class Matrix
         }
         
         return matrix;
+    }
+    
+    private int FindFirstNonZeroRow(int startRow, int col)
+    {
+        for (int i = startRow; i < Rows; i++)
+        {
+            if (this[i, col] != 0)
+            {
+                return i;
+            }
+        }
+        return -1;
     }
     
     // not esential methods for developer for checking
