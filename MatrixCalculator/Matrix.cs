@@ -17,16 +17,7 @@ public class Matrix
     public double this[int row, int col]
     {
         get => _data[row, col];
-        set
-        {
-            if (_isCellSet[row, col])
-            {
-                throw new InvalidOperationException($"Cell [{row}, {col}] is already set! Rewriting is not allowed.");
-            }
-
-            _data[row, col] = value;
-            _isCellSet[row, col] = true;
-        }
+        private set => _data[row, col] = value;
     }
 
     public double Determinant()
