@@ -29,16 +29,20 @@ public class Matrix
     {
         Matrix matrix = this.Clone();
         int swapsForDeterminant = 0;
-        for (int i = 0; i < Cols; i++)
+        for (int i = 0; i < Cols-1; i++)
         {
             int startRow1 = matrix.FindFirstNonZeroRow(i, i);
-            if (startRow1 != i)
+            if (startRow1 != i && startRow1 != -1)
             {
                 matrix.SwapRows(startRow1, i);
                 swapsForDeterminant++;
             }
 
-            startRow1 = matrix.FindFirstNonZeroRow(startRow1, i);
+            if (startRow1 != -1)
+            {
+                startRow1 = matrix.FindFirstNonZeroRow(startRow1 + 1, i);
+            }
+
             while (startRow1 != -1)
             {
                 double multiplier = matrix[startRow1, i] / matrix[i, i];
@@ -124,7 +128,7 @@ public class Matrix
         {
             for (int j = 0; j < Cols; j++)
             {
-                this[i, j] = i * Cols + j; // just a random filling
+                this[i, j] = Convert.ToInt32(Console.ReadLine());
             }
         }
     }
