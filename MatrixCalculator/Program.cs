@@ -11,5 +11,6 @@ class Program
         (Matrix test, int a) = matrix.GetUpperTriangularMatrix();
         Console.WriteLine();
         test.PrintMatrix();
+        Console.WriteLine(matrix.Determinant());
     }
 }

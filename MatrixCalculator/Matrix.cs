@@ -22,7 +22,21 @@ public class Matrix
 
     public double Determinant()
     {
-        return 0;
+        double determinant = 1; 
+        (Matrix matrix, int swaps) = this.GetUpperTriangularMatrix();
+        for (int i = 0; i < Cols; i++)
+        {
+            determinant *= matrix[i, i];
+        }
+
+        if (swaps % 2 == 0)
+        {
+            return determinant;
+        }
+        else
+        {
+            return -determinant;
+        }
     }
 
     public (Matrix upperTriangularMatrix, int swapsForDeterminant) GetUpperTriangularMatrix()
