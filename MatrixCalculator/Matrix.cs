@@ -75,16 +75,28 @@ public class Matrix
     
     public (Matrix lowerTriangularMatrix, int swapsForDeterminant) GetLowerTriangularMatrix()
     {
-        
-        
-        Matrix a = new Matrix(3, 3);
-        return (a, 0);
+        (Matrix matrix, int swapsfordeteminant) = GetUpperTriangularMatrix();
+        //...
+        return (matrix, 0);
     }
     
     public Matrix GetDiagonalMatrix()
     {
         Matrix a = new Matrix(3, 3);
         return a;
+    }
+    
+    public Matrix GetTransposedMatrix()
+    {
+        Matrix matrix = new Matrix(Rows, Cols);
+        for (int i = 0; i < Rows; i++)
+        {
+            for (int j = 0; j < Rows; j++)
+            {
+                matrix[i, j] = this[j, i];
+            }
+        }
+        return matrix;
     }
     
     //supporting methods

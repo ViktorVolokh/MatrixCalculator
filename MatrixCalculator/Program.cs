@@ -12,5 +12,7 @@ class Program
         Console.WriteLine();
         test.PrintMatrix();
         Console.WriteLine(matrix.Determinant());
+        Console.WriteLine();
+        (matrix.GetTransposedMatrix()).PrintMatrix();
     }
 }
