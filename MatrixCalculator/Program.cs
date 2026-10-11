@@ -13,6 +13,8 @@ class Program
         test.PrintMatrix();
         Console.WriteLine(matrix.Determinant());
         Console.WriteLine();
-        (matrix.GetTransposedMatrix()).PrintMatrix();
+        matrix.GetTransposedMatrix().PrintMatrix();
+        (Matrix test2, int b) = matrix.GetLowerTriangularMatrix();
+        test2.PrintMatrix();
     }
 }

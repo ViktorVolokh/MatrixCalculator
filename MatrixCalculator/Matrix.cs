@@ -76,8 +76,8 @@ public class Matrix
     public (Matrix lowerTriangularMatrix, int swapsForDeterminant) GetLowerTriangularMatrix()
     {
         (Matrix matrix, int swapsfordeteminant) = GetUpperTriangularMatrix();
-        //...
-        return (matrix, 0);
+        
+        return (matrix.GetTransposedMatrix(), swapsfordeteminant);
     }
     
     public Matrix GetDiagonalMatrix()
