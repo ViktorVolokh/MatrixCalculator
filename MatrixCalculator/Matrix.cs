@@ -23,7 +23,7 @@ public class Matrix
     public double Determinant()
     {
         double determinant = 1; 
-        (Matrix matrix, int swaps) = this.GetUpperTriangularMatrix();
+        (Matrix matrix, int swaps, _) = this.GetUpperTriangularMatrix();
         for (int i = 0; i < Cols; i++)
         {
             determinant *= matrix[i, i];
@@ -39,8 +39,23 @@ public class Matrix
         }
     }
 
-    public (Matrix upperTriangularMatrix, int swapsForDeterminant) GetUpperTriangularMatrix()
+    public (Matrix upperTriangularMatrix, int swapsForDeterminant, Matrix lowerTriangularMatrix) GetUpperTriangularMatrix()
     {
+        Matrix lowerTriangularMatrix = new Matrix(Rows, Cols);
+        for (int i = 0; i < Rows; i++)
+        {
+            for (int j = 0; j < Rows; j++)
+            {
+                if (i > j)
+                {
+                    lowerTriangularMatrix[i, j] = 0;
+                }
+                else if (i == j)
+                {
+                    lowerTriangularMatrix[i, j] = 1;
+                }
+            }
+        }
         Matrix matrix = this.Clone();
         int swapsForDeterminant = 0;
         for (int i = 0; i < Cols-1; i++)
@@ -60,7 +75,9 @@ public class Matrix
             while (startRow1 != -1)
             {
                 double multiplier = matrix[startRow1, i] / matrix[i, i];
-
+                
+                lowerTriangularMatrix[startRow1, i] = multiplier;
+                
                 for (int j = 0; j < Cols; j++)
                 {
                     matrix[startRow1, j] -= multiplier * matrix[i, j];
@@ -70,14 +87,7 @@ public class Matrix
             }
         }
 
-        return (matrix, swapsForDeterminant);
-    }
-    
-    public (Matrix lowerTriangularMatrix, int swapsForDeterminant) GetLowerTriangularMatrix()
-    {
-        (Matrix matrix, int swapsfordeteminant) = GetUpperTriangularMatrix();
-        
-        return (matrix.GetTransposedMatrix(), swapsfordeteminant);
+        return (matrix, swapsForDeterminant, lowerTriangularMatrix);
     }
     
     public Matrix GetDiagonalMatrix()
