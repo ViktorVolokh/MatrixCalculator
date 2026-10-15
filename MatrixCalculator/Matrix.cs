@@ -35,7 +35,7 @@ public class Matrix
         }
         else
         {
-            return -determinant;
+            return -1 * determinant;
         }
     }
 
@@ -92,8 +92,22 @@ public class Matrix
     
     public Matrix GetDiagonalMatrix()
     {
-        Matrix a = new Matrix(3, 3);
-        return a;
+        (Matrix matrix, _, _) = this.GetUpperTriangularMatrix();
+        for (int i = Rows - 1; i > - 1; i--)
+        {
+            
+            for (int j = 0; j < i; j++)
+            {
+                int startRow = FindFirstNonZeroRowUpper(i, j);
+                if (matrix[i, j] == 0 || startRow == -1)
+                {
+                    continue;
+                }
+                double multiplier = matrix[i, j] / matrix[i, j];
+                matrix[i, j] -= multiplier *  matrix[i, j];
+            }
+        }
+        return matrix;
     }
     
     public Matrix GetTransposedMatrix()
@@ -147,6 +161,18 @@ public class Matrix
     private int FindFirstNonZeroRow(int startRow, int col)
     {
         for (int i = startRow; i < Rows; i++)
+        {
+            if (this[i, col] != 0)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+    
+    private int FindFirstNonZeroRowUpper(int startRow, int col)
+    {
+        for (int i = startRow; i > Rows; i--)
         {
             if (this[i, col] != 0)
             {
