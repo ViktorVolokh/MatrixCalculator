@@ -24,7 +24,7 @@ public class Matrix
     {
         double determinant = 1; 
         (Matrix matrix, int swaps, _) = this.GetUpperTriangularMatrix();
-        for (int i = 0; i < Cols; i++)
+        for (int i = 0; i < Rows; i++)
         {
             determinant *= matrix[i, i];
         }
@@ -58,7 +58,7 @@ public class Matrix
         }
         Matrix matrix = this.Clone();
         int swapsForDeterminant = 0;
-        for (int i = 0; i < Cols-1; i++)
+        for (int i = 0; i < Rows-1; i++)
         {
             int startRow1 = matrix.FindFirstNonZeroRow(i, i);
             if (startRow1 != i && startRow1 != -1)
@@ -90,21 +90,48 @@ public class Matrix
         return (matrix, swapsForDeterminant, lowerTriangularMatrix);
     }
     
-    public Matrix GetDiagonalMatrix()
+    public Matrix GetGaussJordan()
     {
-        (Matrix matrix, _, _) = this.GetUpperTriangularMatrix();
-        for (int i = Rows - 1; i > - 1; i--)
+        if (Determinant() == 0)
         {
-            
-            for (int j = 0; j < i; j++)
+            throw new DivideByZeroException();
+        }
+        (Matrix matrix, _, _) = this.GetUpperTriangularMatrix();
+        for (int i = 0; i < Rows; i++)
+        {
+            double divider = matrix[i, i];
+            if (divider == 0)
             {
-                int startRow = FindFirstNonZeroRowUpper(i, j);
-                if (matrix[i, j] == 0 || startRow == -1)
+                continue;
+            }
+            {
+                
+            }
+            for (int j = 0; j < Cols; j++)
+            {
+                matrix[i, j] /= divider;
+            }
+        }
+        for (int i = Rows - 1; i > 0; i--)
+        {
+            int startRow1 = matrix.FindFirstNonZeroRowUpper(i, i);
+
+            if (startRow1 != -1)
+            {
+                startRow1 = matrix.FindFirstNonZeroRowUpper(startRow1 - 1, i);
+            }
+
+            while (startRow1 != -1)
+            {
+                double multiplier = matrix[startRow1, i] / matrix[i, i];
+                
+                
+                for (int j = 0; j < Cols; j++)
                 {
-                    continue;
+                    matrix[startRow1, j] -= multiplier * matrix[i, j];
                 }
-                double multiplier = matrix[i, j] / matrix[i, j];
-                matrix[i, j] -= multiplier *  matrix[i, j];
+
+                startRow1 = matrix.FindFirstNonZeroRowUpper(startRow1, i);
             }
         }
         return matrix;
@@ -172,7 +199,7 @@ public class Matrix
     
     private int FindFirstNonZeroRowUpper(int startRow, int col)
     {
-        for (int i = startRow; i > Rows; i--)
+        for (int i = startRow; i > -1; i--)
         {
             if (this[i, col] != 0)
             {
