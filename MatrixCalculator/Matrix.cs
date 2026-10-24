@@ -5,13 +5,27 @@ public class Matrix
     public readonly int Rows;
     public readonly int Cols;
     private readonly double[,] _data;
-    private readonly bool[,] _isCellSet;
+     
     public Matrix(int rows, int cols)
     {
         Rows = rows;
         Cols = cols;
         _data = new double[Rows, Cols];
-        _isCellSet = new bool[rows, cols];
+        bool[,] isCellSet = new bool[Rows, Cols];
+        for (int i = 0; i < rows; i++)
+        {
+            for(int j = 0; j < cols; j++)
+            {
+                while (!isCellSet[i, j])
+                {
+                    isCellSet[i, j] = double.TryParse(Console.ReadLine(), out double value);
+                    if (isCellSet[i, j])
+                    {
+                        _data[i, j] = value;
+                    }
+                }
+            }
+        }
     }
 
     public double this[int row, int col]
@@ -207,31 +221,5 @@ public class Matrix
             }
         }
         return -1;
-    }
-    
-    // not esential methods for developer for checking
-
-    public void FillMatrix()
-    {
-        for (int i = 0; i < Rows; i++)
-        {
-            for (int j = 0; j < Cols; j++)
-            {
-                this[i, j] = Convert.ToInt32(Console.ReadLine());
-            }
-        }
-    }
-
-    public void PrintMatrix()
-    {
-        for (int i = 0; i < Rows; i++)
-        {
-            for (int j = 0; j < Cols; j++)
-            {
-                Console.Write(this[i, j] + " ");
-            }
-
-            Console.WriteLine();
-        }
     }
 }
