@@ -6,6 +6,44 @@ public class Matrix
     public readonly int Cols;
     private readonly double[,] _data;
      
+    public static Matrix operator +(Matrix matrix1, Matrix matrix2)
+    {
+        Matrix matrix = new Matrix(matrix1.Rows, matrix1.Cols);
+        return matrix;
+    }
+    
+    public static Matrix operator -(Matrix matrix1, Matrix matrix2)
+    {
+        Matrix matrix = new Matrix(matrix1.Rows, matrix1.Cols);
+        return matrix;
+    }
+    
+    public static Matrix operator *(Matrix matrix1, Matrix matrix2)
+    {
+        Matrix matrix = new Matrix(matrix1.Rows, matrix1.Cols);
+        return matrix;
+    }
+    public static bool operator ==(Matrix matrix1, Matrix matrix2)
+    {
+        Matrix matrix = new Matrix(matrix1.Rows, matrix1.Cols);
+        return true;
+    }
+    public static bool operator !=(Matrix matrix1, Matrix matrix2)
+    {
+        Matrix matrix = new Matrix(matrix1.Rows, matrix1.Cols);
+        return true;
+    }
+
+    public override int GetHashCode()
+    {
+        return base.GetHashCode();
+    }
+
+    public override bool Equals(object? obj)
+    {
+        return base.Equals(obj);
+    }
+
     public Matrix(int rows, int cols)
     {
         Rows = rows;
@@ -163,6 +201,8 @@ public class Matrix
         }
         return matrix;
     }
+    
+    
     
     //supporting methods
     private void SwapRows(int row1, int row2)
