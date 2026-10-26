@@ -5,7 +5,35 @@ public class Matrix
     public readonly int Rows;
     public readonly int Cols;
     private readonly double[,] _data;
-     
+
+    public Matrix(int rows, int cols)
+    {
+        Rows = rows;
+        Cols = cols;
+        _data = new double[Rows, Cols];
+        bool[,] isCellSet = new bool[Rows, Cols];
+        for (int i = 0; i < rows; i++)
+        {
+            for(int j = 0; j < cols; j++)
+            {
+                while (!isCellSet[i, j])
+                {
+                    isCellSet[i, j] = double.TryParse(Console.ReadLine(), out double value);
+                    if (isCellSet[i, j])
+                    {
+                        _data[i, j] = value;
+                    }
+                }
+            }
+        }
+    }
+
+    public double this[int row, int col]
+    {
+        get => _data[row, col];
+        private set => _data[row, col] = value;
+    }
+    
     public static Matrix operator +(Matrix matrix1, Matrix matrix2)
     {
         Matrix matrix = new Matrix(matrix1.Rows, matrix1.Cols);
@@ -44,32 +72,17 @@ public class Matrix
         return base.Equals(obj);
     }
 
-    public Matrix(int rows, int cols)
+    public static Matrix Add(Matrix matrix1, Matrix matrix2)
     {
-        Rows = rows;
-        Cols = cols;
-        _data = new double[Rows, Cols];
-        bool[,] isCellSet = new bool[Rows, Cols];
-        for (int i = 0; i < rows; i++)
+        Matrix outMatrix = new Matrix(matrix1.Rows, matrix1.Cols);
+        for (int i = 0; i < matrix1.Rows; i++)
         {
-            for(int j = 0; j < cols; j++)
+            for (int j = 0; j < matrix1.Cols; j++)
             {
-                while (!isCellSet[i, j])
-                {
-                    isCellSet[i, j] = double.TryParse(Console.ReadLine(), out double value);
-                    if (isCellSet[i, j])
-                    {
-                        _data[i, j] = value;
-                    }
-                }
+                outMatrix[i, j] =  matrix1[i, j] + matrix2[i, j];
             }
         }
-    }
-
-    public double this[int row, int col]
-    {
-        get => _data[row, col];
-        private set => _data[row, col] = value;
+        return outMatrix;
     }
 
     public double Determinant()
