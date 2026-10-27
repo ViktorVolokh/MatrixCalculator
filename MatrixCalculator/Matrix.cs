@@ -85,6 +85,19 @@ public class Matrix
         return outMatrix;
     }
 
+    public static Matrix Subtruct(Matrix matrix1, Matrix matrix2)
+    {
+        Matrix outMatrix = new Matrix(matrix1.Rows, matrix1.Cols);
+        for (int i = 0; i < matrix1.Rows; i++)
+        {
+            for (int j = 0; j < matrix1.Cols; j++)
+            {
+                outMatrix[i, j] =  matrix1[i, j] - matrix2[i, j];
+            }
+        }
+        return outMatrix;
+    }
+    
     public double Determinant()
     {
         double determinant = 1; 
