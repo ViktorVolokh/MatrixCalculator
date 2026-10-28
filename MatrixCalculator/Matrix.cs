@@ -12,16 +12,27 @@ public class Matrix
         Cols = cols;
         _data = new double[Rows, Cols];
         bool[,] isCellSet = new bool[Rows, Cols];
-        for (int i = 0; i < rows; i++)
+    }
+    
+    public Matrix(int rows, int cols, bool isFilledByUser)
+    {
+        Rows = rows;
+        Cols = cols;
+        _data = new double[Rows, Cols];
+        bool[,] isCellSet = new bool[Rows, Cols];
+        if (isFilledByUser)
         {
-            for(int j = 0; j < cols; j++)
+            for (int i = 0; i < rows; i++)
             {
-                while (!isCellSet[i, j])
+                for (int j = 0; j < cols; j++)
                 {
-                    isCellSet[i, j] = double.TryParse(Console.ReadLine(), out double value);
-                    if (isCellSet[i, j])
+                    while (!isCellSet[i, j])
                     {
-                        _data[i, j] = value;
+                        isCellSet[i, j] = double.TryParse(Console.ReadLine(), out double value);
+                        if (isCellSet[i, j])
+                        {
+                            _data[i, j] = value;
+                        }
                     }
                 }
             }
@@ -93,6 +104,22 @@ public class Matrix
             for (int j = 0; j < matrix1.Cols; j++)
             {
                 outMatrix[i, j] =  matrix1[i, j] - matrix2[i, j];
+            }
+        }
+        return outMatrix;
+    }
+
+    public static Matrix Multiply(Matrix matrix1, Matrix matrix2)
+    {
+        Matrix outMatrix = new Matrix(matrix1.Rows, matrix1.Cols);
+        for (int i = 0; i < matrix1.Rows; i++)
+        {
+            for (int j = 0; j < matrix1.Cols; j++)
+            {
+                for (int k = 0; k < matrix2.Rows; k++)
+                {
+                    outMatrix[i, j] += matrix1[i, k] * matrix2[k, j];
+                }  
             }
         }
         return outMatrix;
@@ -265,6 +292,7 @@ public class Matrix
         return matrix;
     }
     
+    
     private int FindFirstNonZeroRow(int startRow, int col)
     {
         for (int i = startRow; i < Rows; i++)
@@ -288,4 +316,20 @@ public class Matrix
         }
         return -1;
     }
+    
+    // not esential methods for developer for checking
+
+    public void PrintMatrix()
+    {
+        for (int i = 0; i < Rows; i++)
+        {
+            for (int j = 0; j < Cols; j++)
+            {
+                Console.Write(this[i, j] + " ");
+            }
+
+            Console.WriteLine();
+        }
+    }
+    
 }
