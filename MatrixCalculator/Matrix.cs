@@ -1,6 +1,6 @@
 namespace MatrixCalculator;
 
-public class Matrix
+public class Matrix : IEquatable<Matrix>
 {
     public readonly int Rows;
     public readonly int Cols;
@@ -80,7 +80,26 @@ public class Matrix
 
     public override bool Equals(object? obj)
     {
-        return base.Equals(obj);
+        return Equals(obj as Matrix);
+    }
+
+    public bool Equals(Matrix? other)
+    {
+        if (other is null) return false;
+
+        if (ReferenceEquals(this, other)) return true;
+        
+        if (Rows != other.Rows || Cols != other.Cols) return false;
+
+        for (int i = 0; i < Rows; i++)
+        {
+            for (int j = 0; j < Cols; j++)
+            {
+                if (this[i, j] != other[i, j]) return false;
+            }
+        }
+        
+        return true;
     }
 
     public static Matrix Add(Matrix matrix1, Matrix matrix2)
