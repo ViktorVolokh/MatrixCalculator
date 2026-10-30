@@ -75,7 +75,20 @@ public class Matrix : IEquatable<Matrix>
 
     public override int GetHashCode()
     {
-        return base.GetHashCode();
+        var hash = new HashCode();
+    
+        hash.Add(Rows);
+        hash.Add(Cols);
+
+        for (int i = 0; i < Rows; i++)
+        {
+            for (int j = 0; j < Cols; j++)
+            {
+                hash.Add(this[i, j]);
+            }
+        }
+
+        return hash.ToHashCode();
     }
 
     public override bool Equals(object? obj)
