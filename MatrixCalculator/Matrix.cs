@@ -47,19 +47,19 @@ public class Matrix : IEquatable<Matrix>
     
     public static Matrix operator +(Matrix matrix1, Matrix matrix2)
     {
-        Matrix matrix = new Matrix(matrix1.Rows, matrix1.Cols);
+        Matrix matrix = Add(matrix1, matrix2);
         return matrix;
     }
     
     public static Matrix operator -(Matrix matrix1, Matrix matrix2)
     {
-        Matrix matrix = new Matrix(matrix1.Rows, matrix1.Cols);
+        Matrix matrix = Subtruct(matrix1, matrix2);
         return matrix;
     }
     
     public static Matrix operator *(Matrix matrix1, Matrix matrix2)
     {
-        Matrix matrix = new Matrix(matrix1.Rows, matrix1.Cols);
+        Matrix matrix = Multiply(matrix1, matrix2);
         return matrix;
     }
     public static bool operator ==(Matrix matrix1, Matrix matrix2)
