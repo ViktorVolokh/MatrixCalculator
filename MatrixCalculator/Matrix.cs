@@ -11,7 +11,6 @@ public class Matrix : IEquatable<Matrix>
         Rows = rows;
         Cols = cols;
         _data = new double[Rows, Cols];
-        bool[,] isCellSet = new bool[Rows, Cols];
     }
     
     public Matrix(int rows, int cols, bool isFilledByUser)
@@ -62,15 +61,17 @@ public class Matrix : IEquatable<Matrix>
         Matrix matrix = Multiply(matrix1, matrix2);
         return matrix;
     }
-    public static bool operator ==(Matrix matrix1, Matrix matrix2)
+    public static bool operator ==(Matrix? left, Matrix? right)
     {
-        Matrix matrix = new Matrix(matrix1.Rows, matrix1.Cols);
-        return true;
+        if (ReferenceEquals(left, right)) return true;
+        if (left is null || right is null) return false;
+        
+        return left.Equals(right);
     }
-    public static bool operator !=(Matrix matrix1, Matrix matrix2)
+
+    public static bool operator !=(Matrix? left, Matrix? right)
     {
-        Matrix matrix = new Matrix(matrix1.Rows, matrix1.Cols);
-        return true;
+        return !(left == right);
     }
 
     public override int GetHashCode()
