@@ -5,7 +5,7 @@ public class Matrix : IEquatable<Matrix>
     public readonly int Rows;
     public readonly int Cols;
     private readonly double[,] _data;
-
+    private const double Epsilon = 1e-9;
     public Matrix(int rows, int cols)
     {
         Rows = rows;
@@ -13,6 +13,7 @@ public class Matrix : IEquatable<Matrix>
         _data = new double[Rows, Cols];
     }
     
+    //only for console
     public Matrix(int rows, int cols, bool isFilledByUser)
     {
         Rows = rows;
@@ -52,7 +53,7 @@ public class Matrix : IEquatable<Matrix>
     
     public static Matrix operator -(Matrix matrix1, Matrix matrix2)
     {
-        Matrix matrix = Subtruct(matrix1, matrix2);
+        Matrix matrix = Substruct(matrix1, matrix2);
         return matrix;
     }
     
@@ -63,7 +64,6 @@ public class Matrix : IEquatable<Matrix>
     }
     public static bool operator ==(Matrix? left, Matrix? right)
     {
-        if (ReferenceEquals(left, right)) return true;
         if (left is null || right is null) return false;
         
         return left.Equals(right);
@@ -109,14 +109,14 @@ public class Matrix : IEquatable<Matrix>
         {
             for (int j = 0; j < Cols; j++)
             {
-                if (this[i, j] != other[i, j]) return false;
+                if (!AreEqual(this[i, j], other[i, j])) return false;
             }
         }
         
         return true;
     }
 
-    public static Matrix Add(Matrix matrix1, Matrix matrix2)
+    private static Matrix Add(Matrix matrix1, Matrix matrix2)
     {
         Matrix outMatrix = new Matrix(matrix1.Rows, matrix1.Cols);
         for (int i = 0; i < matrix1.Rows; i++)
@@ -129,7 +129,7 @@ public class Matrix : IEquatable<Matrix>
         return outMatrix;
     }
 
-    public static Matrix Subtruct(Matrix matrix1, Matrix matrix2)
+    private static Matrix Substruct(Matrix matrix1, Matrix matrix2)
     {
         Matrix outMatrix = new Matrix(matrix1.Rows, matrix1.Cols);
         for (int i = 0; i < matrix1.Rows; i++)
@@ -142,7 +142,7 @@ public class Matrix : IEquatable<Matrix>
         return outMatrix;
     }
 
-    public static Matrix Multiply(Matrix matrix1, Matrix matrix2)
+    private static Matrix Multiply(Matrix matrix1, Matrix matrix2)
     {
         Matrix outMatrix = new Matrix(matrix1.Rows, matrix1.Cols);
         for (int i = 0; i < matrix1.Rows; i++)
@@ -160,8 +160,37 @@ public class Matrix : IEquatable<Matrix>
     
     public double Determinant()
     {
-        double determinant = 1; 
-        (Matrix matrix, int swaps, _) = this.GetUpperTriangularMatrix();
+        double determinant = 1;
+        Matrix matrix = this.Clone();
+        int swaps = 0;
+        for (int i = 0; i < Rows-1; i++)
+        {
+            int startRow1 = matrix.FindFirstNonZeroRow(i, i);
+            if (startRow1 != i && startRow1 != -1)
+            {
+                matrix.SwapRows(startRow1, i);
+                swaps++;
+            }
+
+            if (startRow1 != -1)
+            {
+                startRow1 = matrix.FindFirstNonZeroRow(startRow1 + 1, i);
+            }
+
+            while (startRow1 != -1)
+            {
+                double multiplier = matrix[startRow1, i] / matrix[i, i];
+                
+
+                
+                for (int j = 0; j < Cols; j++)
+                {
+                    matrix[startRow1, j] -= multiplier * matrix[i, j];
+                }
+
+                startRow1 = matrix.FindFirstNonZeroRow(startRow1, i);
+            }
+        }
         for (int i = 0; i < Rows; i++)
         {
             determinant *= matrix[i, i];
@@ -171,13 +200,10 @@ public class Matrix : IEquatable<Matrix>
         {
             return determinant;
         }
-        else
-        {
-            return -1 * determinant;
-        }
+        return -1 * determinant;
     }
 
-    public (Matrix upperTriangularMatrix, int swapsForDeterminant, Matrix lowerTriangularMatrix) GetUpperTriangularMatrix()
+    public (Matrix upperTriangularMatrix, int swapsForDeterminant, Matrix lowerTriangularMatrix) GetLuDecomposition()
     {
         Matrix lowerTriangularMatrix = new Matrix(Rows, Cols);
         for (int i = 0; i < Rows; i++)
@@ -234,7 +260,7 @@ public class Matrix : IEquatable<Matrix>
         {
             throw new DivideByZeroException();
         }
-        (Matrix matrix, _, _) = this.GetUpperTriangularMatrix();
+        (Matrix matrix, _, _) = this.GetLuDecomposition();
         for (int i = 0; i < Rows; i++)
         {
             double divider = matrix[i, i];
@@ -300,6 +326,11 @@ public class Matrix : IEquatable<Matrix>
             this[row2, i] = temp;
         }
     }
+    
+    private bool AreEqual(double a, double b)
+    {
+        return Math.Abs(a - b) < Epsilon;
+    }
 
     private void SwapCols(int col1, int col2)
     {
@@ -349,6 +380,10 @@ public class Matrix : IEquatable<Matrix>
         }
         return -1;
     }
+    
+    //for determinant
+    
+    
     
     // not esential methods for developer for checking
 
