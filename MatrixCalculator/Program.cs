@@ -9,7 +9,6 @@ class Program
     static void Main(string[] args)
     {
         Matrix matrix1 = new Matrix(2, 2, true);
-        Matrix matrix2 = new Matrix(2, 2, true);
-        (matrix1 * matrix2).PrintMatrix();
+        matrix1.GetGaussJordan();
     }
 }

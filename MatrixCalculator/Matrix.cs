@@ -256,7 +256,7 @@ public class Matrix : IEquatable<Matrix>
     
     public Matrix GetGaussJordan()
     {
-        if (Determinant() == 0)
+        if (AreEqual(Determinant(), 0))
         {
             throw new DivideByZeroException();
         }
@@ -264,7 +264,7 @@ public class Matrix : IEquatable<Matrix>
         for (int i = 0; i < Rows; i++)
         {
             double divider = matrix[i, i];
-            if (divider == 0)
+            if (AreEqual(divider, 0))
             {
                 continue;
             }
@@ -303,8 +303,8 @@ public class Matrix : IEquatable<Matrix>
     
     public Matrix GetTransposedMatrix()
     {
-        Matrix matrix = new Matrix(Rows, Cols);
-        for (int i = 0; i < Rows; i++)
+        Matrix matrix = new Matrix(Cols, Rows);
+        for (int i = 0; i < Cols; i++)
         {
             for (int j = 0; j < Rows; j++)
             {
@@ -327,7 +327,7 @@ public class Matrix : IEquatable<Matrix>
         }
     }
     
-    private bool AreEqual(double a, double b)
+    private static bool AreEqual(double a, double b)
     {
         return Math.Abs(a - b) < Epsilon;
     }
@@ -361,7 +361,7 @@ public class Matrix : IEquatable<Matrix>
     {
         for (int i = startRow; i < Rows; i++)
         {
-            if (this[i, col] != 0)
+            if (!AreEqual(this[i, col], 0))
             {
                 return i;
             }
@@ -373,17 +373,13 @@ public class Matrix : IEquatable<Matrix>
     {
         for (int i = startRow; i > -1; i--)
         {
-            if (this[i, col] != 0)
+            if (!AreEqual(this[i, col], 0))
             {
                 return i;
             }
         }
         return -1;
     }
-    
-    //for determinant
-    
-    
     
     // not esential methods for developer for checking
 
